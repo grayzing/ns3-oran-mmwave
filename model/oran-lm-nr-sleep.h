@@ -28,63 +28,41 @@
  * employees is not subject to copyright protection within the United States.
  */
 
-#ifndef ORAN_E2_NODE_TERMINATOR_NR_GNB_H
-#define ORAN_E2_NODE_TERMINATOR_NR_GNB_H
+#ifndef ORAN_LM_NR_SLEEP_H
+#define ORAN_LM_NR_SLEEP_H
 
-#include "oran-e2-node-terminator.h"
-#include "ns3/nr-gnb-net-device.h"
+#include "oran-lm.h"
 
-namespace ns3 
+namespace ns3
 {
-
 /**
  * @ingroup oran
- * 
- * E2 Node Terminator for 5G NR gNBs. 
+ *
+ * Logic Module that controls sleep states of gNBs.
  */
-
-class OranE2NodeTerminatorNrGnb : public OranE2NodeTerminator 
+class OranLmNrSleep : public OranLm
 {
-    public:
-        /**
-         * Get the TypeId of the OranE2NodleTerminatorNrGnb class.
-         * 
-         * @return The TypeId.
-         */
-        static TypeId GetTypeId();
-
-        /**
-         * Create an instance of the OranE2NodeTerminatorNrGnb class.
-         */
-        OranE2NodeTerminatorNrGnb();
-
-        /**
-         * The destructor of the OranE2NodeTerminatorNrGnb class.
-         */
-        ~OranE2NodeTerminatorNrGnb() override;
-
-        /**
-         * Get the E2 Node Type. For this terminator, this method will always return the 5G NR gNB type.
-         * 
-         * @return the E2 Node Type
-         */
-        OranNearRtRic::NodeType GetNodeType() const override;
-        /**
-         * Receive and process a command.
-         * This will only process sleep mode commands for right now.
-         * 
-         * @param command The received command
-         */
-        void ReceiveCommand(Ptr<OranCommand> command) override;
-        /**
-         * Get the NetDevice of the 5G NR gNB.
-         * 
-         * @return The net device
-         */
-        virtual Ptr<NrGnbNetDevice> GetNetDevice() const;
-}; // class OranE2NodeTerminatorNrGnb
+  public:
+    /**
+     * Get the TypeId of the OranLmNoop class.
+     *
+     * @return The TypeId
+     */
+    static TypeId GetTypeId();
+    /**
+     * @brief
+     */
+    OranLmNrSleep::OranLmNrSleep();
+    /**
+     * @brief The destructor for the OranLmNrSleep class.
+     */
+    OranLmNrSleep::~OranLmNrSleep() override;
+    /**
+     * Run the logic of this LM. Nothing has been implemented thus far, so nothing will happen.
+     */
+    std::vector<Ptr<OranCommand>> Run() override;
+}; // class OranLmNrSleep
 
 } // namespace ns3
 
-#endif /* ORAN_E2_NODE_TERMINATOR_NR_GNB_H */
-
+#endif /* ORAN_LM_NR_SLEEP */

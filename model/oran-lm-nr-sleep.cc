@@ -28,63 +28,55 @@
  * employees is not subject to copyright protection within the United States.
  */
 
-#ifndef ORAN_E2_NODE_TERMINATOR_NR_GNB_H
-#define ORAN_E2_NODE_TERMINATOR_NR_GNB_H
+ #include "oran-lm-nr-sleep.h"
 
-#include "oran-e2-node-terminator.h"
-#include "ns3/nr-gnb-net-device.h"
+ #include "oran-command.h"
+ #include "oran-near-rt-ric.h"
 
-namespace ns3 
-{
+ #include "ns3/abort.h"
+ #include "ns3/log.h"
 
-/**
- * @ingroup oran
- * 
- * E2 Node Terminator for 5G NR gNBs. 
- */
+ namespace ns3
+ {
+    NS_LOG_COMPONENT_DEFINE("OranLmNrSleep");
 
-class OranE2NodeTerminatorNrGnb : public OranE2NodeTerminator 
-{
-    public:
+    NS_OBJECT_ENSURE_REGISTERED(OranLmNrSleep);
+
+    TypeId
+    OranLmNrSleep::GetTypeId()
+    {
+        static TypeId tid = TypeId("ns3::OranLmNrSleep").SetParent<OranLm>().AddConstructor<OranLmNrSleep>();
+        
+        return tid;
+    }
+
+    OranLmNrSleep::OranLmNrSleep()
+        : OranLm()
+    {
+        NS_LOG_FUNCTION(this);
+
+        m_name = "OranLmNrSleep";
+    }
+
+    OranLmNrSleep::~OranLmNrSleep()
+    {
+        NS_LOG_FUNCTION(this);
+    }
+
+    std::vector<Ptr<OranCommand>>
+    OranLmNrSleep::Run()
+    {
+        NS_LOG_FUNCTION(this);
+
         /**
-         * Get the TypeId of the OranE2NodleTerminatorNrGnb class.
+         * @todo Implement the necessary model for this LM.
          * 
-         * @return The TypeId.
          */
-        static TypeId GetTypeId();
 
-        /**
-         * Create an instance of the OranE2NodeTerminatorNrGnb class.
-         */
-        OranE2NodeTerminatorNrGnb();
+        NS_ABORT_MSG_IF(m_nearRtRic == nullptr,
+                        "Attemping to run LM(" + m_name + ") with NULL Near-RT RIC");
 
-        /**
-         * The destructor of the OranE2NodeTerminatorNrGnb class.
-         */
-        ~OranE2NodeTerminatorNrGnb() override;
-
-        /**
-         * Get the E2 Node Type. For this terminator, this method will always return the 5G NR gNB type.
-         * 
-         * @return the E2 Node Type
-         */
-        OranNearRtRic::NodeType GetNodeType() const override;
-        /**
-         * Receive and process a command.
-         * This will only process sleep mode commands for right now.
-         * 
-         * @param command The received command
-         */
-        void ReceiveCommand(Ptr<OranCommand> command) override;
-        /**
-         * Get the NetDevice of the 5G NR gNB.
-         * 
-         * @return The net device
-         */
-        virtual Ptr<NrGnbNetDevice> GetNetDevice() const;
-}; // class OranE2NodeTerminatorNrGnb
-
-} // namespace ns3
-
-#endif /* ORAN_E2_NODE_TERMINATOR_NR_GNB_H */
-
+        LogLogicToRepository("No action taken");
+        return {};
+    }
+ }

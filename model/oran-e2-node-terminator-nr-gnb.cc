@@ -31,6 +31,7 @@
 #include "oran-e2-node-terminator-nr-gnb.h"
 
 #include "ns3/log.h"
+#include "oran-command-nr-sleep.h"
 
 namespace ns3
 {
@@ -70,7 +71,48 @@ namespace ns3
     void
     OranE2NodeTerminatorNrGnb::ReceiveCommand(Ptr<OranCommand> command) 
     {
-        NS_LOG_FUNCTION(this);
+        NS_LOG_FUNCTION(this << command);
+
+        if (m_active)
+        {
+            if(command->GetInstanceTypeId() == OranCommandNrSleep::GetTypeId())
+            {
+                Ptr<NrGnbNetDevice> NrGnbNetDev =
+                    GetNode()->GetDevice(GetNetDeviceIndex())->GetObject<NrGnbNetDevice>();
+
+                Ptr<OranCommandNrSleep> NrSleepCommand = command->GetObject<OranCommandNrSleep>();
+
+                OranCommandNrSleep::AdvancedSleepMode AdvancedSleepMode = NrSleepCommand->GetAdvancedSleepMode();
+
+                switch(AdvancedSleepMode)
+                {
+                    case 1:
+                    {
+                        
+                        break;
+                    }
+                    case 2:
+                    {
+
+                        break;
+                    }
+                    case 3:
+                    {
+
+                        break;
+                    }
+                    case 4:
+                    {
+
+                        break;
+                    }
+                    default:
+                    {
+                        NS_LOG_ERROR("The given advanced sleep mode is not recognized");
+                    }
+                }
+            }
+        }
     }
 
     Ptr<NrGnbNetDevice>

@@ -248,6 +248,21 @@ OranDataRepositorySqlite::RegisterNodeNrGnb(uint64_t id, uint16_t cellId)
 
     uint64_t e2NodeId = 0;
 
+    if (m_active)
+    {
+        int rc;
+        sqlite3_stmt* stmt = nullptr;
+        e2NodeId = RegisterNode(OranNearRtRic::NodeType::NRGNB, id);
+
+        sqlite3_prepare_v2(m_db, m_queryStmtsStrings[INSERT_NR_GNB_NODE].c_str(), -1, &stmt, 0);
+
+        sqlite3_bind_int64(stmt, 1, id);
+        sqlite3_bind_int(stmt, 2, cellId);
+
+        rc = sqlite3_step(stmt);
+        CheckQueryReturnCode(stmt, rc, FormatBoundArgsList(id, cellId));
+        sqlite3_finalize(stmt);
+    }
     return e2NodeId;
 }
 

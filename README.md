@@ -109,6 +109,7 @@ This release of the `oran` module contains the following features:
 
 # Minimum Requirements
 * ns-3.42
+* 5g-lena-3.1
 * SQLite 3.7.17
 
 ## Optional Dependencies
@@ -137,7 +138,13 @@ git clone https://github.com/usnistgov/ns3-oran.git oran
 git clone git@github.com:usnistgov/ns3-oran.git oran
 ```
 
-3) (Re)configure and (Re)build `ns-3`
+3) Clone 5G LENA
+```shell
+# HTTPS
+git clone https://gitlab.com/cttc-lena/nr.git
+```
+
+4) (Re)configure and (Re)build `ns-3`
 
 ```shell
 # --enable-examples is optional, see `Running the Examples`

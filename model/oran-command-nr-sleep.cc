@@ -28,63 +28,37 @@
  * employees is not subject to copyright protection within the United States.
  */
 
-#ifndef ORAN_E2_NODE_TERMINATOR_NR_GNB_H
-#define ORAN_E2_NODE_TERMINATOR_NR_GNB_H
+#include "ns3/log.h"
+#include "oran-command-nr-sleep.h"
 
-#include "oran-e2-node-terminator.h"
-#include "ns3/nr-gnb-net-device.h"
-
-namespace ns3 
+namespace ns3
 {
+    NS_LOG_COMPONENT_DEFINE("OranCommandNrSleep");
+    
+    NS_OBJECT_ENSURE_REGISTERED(OranCommandNrSleep);
 
-/**
- * @ingroup oran
- * 
- * E2 Node Terminator for 5G NR gNBs. 
- */
+    TypeId
+    OranCommandNrSleep::GetTypeId()
+    {
+        static TypeId tid;
 
-class OranE2NodeTerminatorNrGnb : public OranE2NodeTerminator 
-{
-    public:
-        /**
-         * Get the TypeId of the OranE2NodleTerminatorNrGnb class.
-         * 
-         * @return The TypeId.
-         */
-        static TypeId GetTypeId();
+        return tid;
+    }
 
-        /**
-         * Create an instance of the OranE2NodeTerminatorNrGnb class.
-         */
-        OranE2NodeTerminatorNrGnb();
+    OranCommandNrSleep::OranCommandNrSleep()
+    {
+        NS_LOG_FUNCTION(this);
+    }
 
-        /**
-         * The destructor of the OranE2NodeTerminatorNrGnb class.
-         */
-        ~OranE2NodeTerminatorNrGnb() override;
+    OranCommandNrSleep::~OranCommandNrSleep()
+    {
+        NS_LOG_FUNCTION(this);
+    }
 
-        /**
-         * Get the E2 Node Type. For this terminator, this method will always return the 5G NR gNB type.
-         * 
-         * @return the E2 Node Type
-         */
-        OranNearRtRic::NodeType GetNodeType() const override;
-        /**
-         * Receive and process a command.
-         * This will only process sleep mode commands for right now.
-         * 
-         * @param command The received command
-         */
-        void ReceiveCommand(Ptr<OranCommand> command) override;
-        /**
-         * Get the NetDevice of the 5G NR gNB.
-         * 
-         * @return The net device
-         */
-        virtual Ptr<NrGnbNetDevice> GetNetDevice() const;
-}; // class OranE2NodeTerminatorNrGnb
-
-} // namespace ns3
-
-#endif /* ORAN_E2_NODE_TERMINATOR_NR_GNB_H */
-
+    OranCommandNrSleep::AdvancedSleepMode 
+    OranCommandNrSleep::GetAdvancedSleepMode() const
+    {
+        NS_LOG_FUNCTION(this << this->m_advancedSleepMode);
+        return this->m_advancedSleepMode;
+    }
+}

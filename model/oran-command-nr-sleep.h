@@ -28,63 +28,66 @@
  * employees is not subject to copyright protection within the United States.
  */
 
-#ifndef ORAN_E2_NODE_TERMINATOR_NR_GNB_H
-#define ORAN_E2_NODE_TERMINATOR_NR_GNB_H
+#ifndef ORAN_COMMAND_NR_SLEEP_H
+#define ORAN_COMMAND_NR_SLEEP_H
 
-#include "oran-e2-node-terminator.h"
-#include "ns3/nr-gnb-net-device.h"
+#include "oran-command.h"
 
-namespace ns3 
+namespace ns3
 {
-
 /**
  * @ingroup oran
- * 
- * E2 Node Terminator for 5G NR gNBs. 
+ * A Command instructing an NR gNB to enter a specified advanced sleep mode (ASM)
+ * The Target E2 Node ID is the gNB that will enter the specificed ASM.
  */
 
-class OranE2NodeTerminatorNrGnb : public OranE2NodeTerminator 
+class OranCommandNrSleep : public OranCommand
 {
-    public:
-        /**
-         * Get the TypeId of the OranE2NodleTerminatorNrGnb class.
-         * 
-         * @return The TypeId.
-         */
-        static TypeId GetTypeId();
+  public:
+    enum AdvancedSleepMode
+    {
+        SM1 = 1,
+        SM2 = 2,
+        SM3 = 3,
+        SM4 = 4
+    };
 
-        /**
-         * Create an instance of the OranE2NodeTerminatorNrGnb class.
-         */
-        OranE2NodeTerminatorNrGnb();
+    /**
+     * Gets the TypeId of the OranCommandNrSleep class.
+     *
+     * @return The TypeId.
+     */
+    static TypeId GetTypeId();
+    /**
+     * Creates an instance of the OranCommandNrSleep class.
+     */
+    OranCommandNrSleep();
+    /**
+     * The destructor of the OranCommandNrSleep class.
+     */
+    ~OranCommandNrSleep() override;
 
-        /**
-         * The destructor of the OranE2NodeTerminatorNrGnb class.
-         */
-        ~OranE2NodeTerminatorNrGnb() override;
+    std::string ToString() const override;
 
-        /**
-         * Get the E2 Node Type. For this terminator, this method will always return the 5G NR gNB type.
-         * 
-         * @return the E2 Node Type
-         */
-        OranNearRtRic::NodeType GetNodeType() const override;
-        /**
-         * Receive and process a command.
-         * This will only process sleep mode commands for right now.
-         * 
-         * @param command The received command
-         */
-        void ReceiveCommand(Ptr<OranCommand> command) override;
-        /**
-         * Get the NetDevice of the 5G NR gNB.
-         * 
-         * @return The net device
-         */
-        virtual Ptr<NrGnbNetDevice> GetNetDevice() const;
-}; // class OranE2NodeTerminatorNrGnb
+  private:
+    /**
+     * The Advanced Sleep Mode that the command will change the cell's sleep mode to.
+     */
+    AdvancedSleepMode m_advancedSleepMode;
 
+  public:
+    /**
+     * Gets the Advanced Sleep Mode that the command will change the cell's sleep mode to.
+     *
+     * @returns The Advanced Sleep Mode.
+     */
+    OranCommandNrSleep::AdvancedSleepMode GetAdvancedSleepMode() const;
+    /**
+     *
+     * @returns The Object
+     */
+    OranCommandNrSleep::AdvancedSleepMode GetObject();
+};
 } // namespace ns3
 
-#endif /* ORAN_E2_NODE_TERMINATOR_NR_GNB_H */
-
+#endif
